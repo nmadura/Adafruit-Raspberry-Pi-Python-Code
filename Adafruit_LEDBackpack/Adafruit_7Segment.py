@@ -3,6 +3,7 @@
 import time
 import datetime
 from Adafruit_LEDBackpack import LEDBackpack
+from Adafruit_I2C import Adafruit_I2C
 
 # ===========================================================================
 # 7-Segment Display
@@ -19,10 +20,10 @@ class SevenSegment:
              0x77, 0x7C, 0x39, 0x5E, 0x79, 0x71 ]
 
   # Constructor
-  def __init__(self, address=0x70, debug=False):
+  def __init__(self, address=0x70, bus=Adafruit_I2C.getPiI2CBusNumber(), debug=False):
     if (debug):
       print "Initializing a new instance of LEDBackpack at 0x%02X" % address
-    self.disp = LEDBackpack(address=address, debug=debug)
+    self.disp = LEDBackpack(address=address, bus=bus, debug=debug)
 
   def writeDigitRaw(self, charNumber, value):
     "Sets a digit using the raw 16-bit value"

@@ -8,6 +8,7 @@ import smbus
 
 class Adafruit_I2C :
 
+  @staticmethod
   def getPiRevision():
     "Gets the version number of the Raspberry Pi board"
     # Courtesy quick2wire-python-api
@@ -19,11 +20,16 @@ class Adafruit_I2C :
             return 1 if line.rstrip()[-1] in ['1','2'] else 2
     except:
       return 0
+  
+  @staticmethod
+  def getPiI2CBusNumber():
+    # Gets the I2C bus number /dev/i2c#
+    return 1 if getPiRevision() > 1 else 0
  
-  def __init__(self, address, bus=smbus.SMBus(1 if getPiRevision() > 1 else 0), debug=False):
+  def __init__(self, address, bus=self.getPiI2CBusNumber(), debug=False):
     self.address = address
 	# By default, the correct I2C bus is auto-detected using /proc/cpuinfo
-    self.bus = bus
+    self.bus = smbus.SMBus(bus)
 	# Alternatively, you can hard-code the bus version below:
 	# self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
     # self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
