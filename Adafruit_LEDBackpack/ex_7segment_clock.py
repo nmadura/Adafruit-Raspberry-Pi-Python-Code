@@ -15,9 +15,9 @@ i2CBus = Adafruit_I2C.getPiI2CBusNumber()
 # pin 17 & 18) specify 1, if connected to I2C2 (Header P9, pin 19 & 20) specify 3.
 # WARNING: if using with a BeagleBone use a logic-level convertor such as this one
 # https://www.adafruit.com/products/757
-# i2CBus = 1 | 3
+i2CBus = 3
 
-segment = SevenSegment(address=0x70, i2CBus)
+segment = SevenSegment(address=0x70, bus=i2CBus)
 
 print "Press CTRL+Z to exit"
 

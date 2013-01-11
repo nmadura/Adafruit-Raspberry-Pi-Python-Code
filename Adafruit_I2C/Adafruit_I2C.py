@@ -24,12 +24,12 @@ class Adafruit_I2C :
   @staticmethod
   def getPiI2CBusNumber():
     # Gets the I2C bus number /dev/i2c#
-    return 1 if getPiRevision() > 1 else 0
+    return 1 if Adafruit_I2C.getPiRevision() > 1 else 0
  
-  def __init__(self, address, bus=self.getPiI2CBusNumber(), debug=False):
+  def __init__(self, address, bus=-1, debug=False):
     self.address = address
 	# By default, the correct I2C bus is auto-detected using /proc/cpuinfo
-    self.bus = smbus.SMBus(bus)
+    self.bus = smbus.SMBus(Adafruit_I2C.getPiI2CBusNumber() if bus == -1 else bus)
 	# Alternatively, you can hard-code the bus version below:
 	# self.bus = smbus.SMBus(0); # Force I2C0 (early 256MB Pi's)
     # self.bus = smbus.SMBus(1); # Force I2C1 (512MB Pi's)
